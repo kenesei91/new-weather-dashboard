@@ -1,26 +1,27 @@
-//const cityInputEl = document.querySelector("#form1");
-const buttonEl = document.querySelector("#btn");
-const clearHistoryButtonEl = document.querySelector("#clear-history");
-const historyEl = document.querySelector("#history");
-const cityEl = document.querySelector("#city");
-const icon = document.querySelector("#icon");
-const tempEl = document.querySelector("#temperature");
-const humEl = document.querySelector("#humidity");
-const windEl = document.querySelector("#uv");
-const fiveDayForecast = document.querySelector("#daily-forecast");
+var cityFormEl = document.querySelector("#input-group");
+var cityInputEl = document.querySelector("#form1");
+//var buttonEl = document.querySelector("#btn");
+// var clearHistoryButtonEl = document.querySelector("#clear-history");
+// var historyEl = document.querySelector("#history");
+// var cityEl = document.querySelector("#city");
+// var icon = document.querySelector("#icon");
+// var tempEl = document.querySelector("#temperature");
+// var humEl = document.querySelector("#humidity");
+// var windEl = document.querySelector("#uv");
+// var fiveDayForecast = document.querySelector("#daily-forecast");
 
-// const formSumbitHandler = function(event) {
-//     event.preventDefault();
-//     const cityInputEl = document.querySelector("#form1").value.trim();
-//     if(cityInputEl){
-//         console.log("input confirmed");
-//     }
-// }
+var formSubmitHandler = function (event) {
+  event.preventDefault();
+  var city = cityInputEl.value.trim();
+  //console.log(city);
+  if (city) {
+    cityWeather(city);
+  }
+};
 
-const getCityWeather = function getweather() {
-  const city = "Austin";
-  const apiKey = "3f698036d7cb81fb192ca1a1ad2af845";
-  const apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`;
+var cityWeather = function (city) {
+  var apiKey = "3f698036d7cb81fb192ca1a1ad2af845";
+  var apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`;
 
   fetch(apiURL).then(function (response) {
     response.json().then(function (data) {
@@ -29,6 +30,4 @@ const getCityWeather = function getweather() {
   });
 };
 
-getCityWeather();
-
-// buttonEl.addEventListener('submit', formSumbitHandler);
+cityFormEl.addEventListener("submit", formSubmitHandler);
