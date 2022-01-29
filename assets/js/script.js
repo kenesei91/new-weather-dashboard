@@ -14,12 +14,28 @@ var formSubmitHandler = function (event) {
   event.preventDefault();
   var city = cityInputEl.value.trim();
   //console.log(city);
-  if (city) {
-    cityWeather(city);
+  if(city) {
+    currentCityWeather(city);
+    fiveDayForecast(city);
+  }else{
+    alert('Please enter a valid city');
   }
 };
 
-var cityWeather = function (city) {
+// get current city weather
+var currentCityWeather = function (city) {
+  var apiKey = "3f698036d7cb81fb192ca1a1ad2af845";
+  var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
+
+  fetch(apiURL).then(function (response) {
+    response.json().then(function (data) {
+      console.log(data);
+    });
+  });
+};
+
+// get five day forecast
+var fiveDayForecast = function(city) {
   var apiKey = "3f698036d7cb81fb192ca1a1ad2af845";
   var apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`;
 
@@ -28,6 +44,6 @@ var cityWeather = function (city) {
       console.log(data);
     });
   });
-};
+}
 
 cityFormEl.addEventListener("submit", formSubmitHandler);
