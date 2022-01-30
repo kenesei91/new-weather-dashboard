@@ -2,17 +2,16 @@ var cityFormEl = document.querySelector("#input-group");
 var cityInputEl = document.querySelector("#form1");
 var dailyForecastTitle = document.querySelector("#daily-forecast-title");
 //console.log(dailyForecastTitle);
+
 var currentForecastCity = document.querySelector("#current-forecast-city");
-//var buttonEl = document.querySelector("#btn");
-// var clearHistoryButtonEl = document.querySelector("#clear-history");
-// var historyEl = document.querySelector("#history");
-// var cityEl = document.querySelector("#city");
-// var icon = document.querySelector("#icon");
+var cityImage = document.querySelector("#city-image");
 var tempEl = document.querySelector("#temperature");
 var humEl = document.querySelector("#humidity");
 var windEl = document.querySelector("#wind-speed");
 var uvEl = document.querySelector("#uv");
-// var fiveDayForecast = document.querySelector("#daily-forecast");
+
+var fiveDayContainer = document.querySelector(".five-day-container");
+var fiveDayContainers = document.querySelector(".five-day-container-col");
 
 var formSubmitHandler = function (event) {
   event.preventDefault();
@@ -54,21 +53,57 @@ var fiveDayForecast = function(city) {
 }
 
 var current_forecast_city = function (forecast) {
-  currentForecastCity.textContent = `${forecast.name}`;
+  currentForecastCity.textContent = `${forecast.name }`;
   tempEl.textContent = `Temperature: ${forecast.main.temp} °F`;
   windEl.textContent = `Wind speed: ${forecast.wind.speed} MPH`;
   humEl.textContent = `Wind speed: ${forecast.main.humidity} %`;
+
+  var forecastDate = document.createElement("span");
+  forecastDate.textContent = ` (${moment(forecast.dt.value).format("MMM D, YYYY")})`;
+  currentForecastCity.appendChild(forecastDate);
+
+  var forecastIcon = document.createElement("img");
+  forecastIcon.setAttribute("src", `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`);
+  currentForecastCity.appendChild(forecastIcon);
 
   var lat = forecast.coord.lat;
   var lon = forecast.coord.long;
 };
 
 var five_forecast = function(forecast){
+  fiveDayContainer.textContent = "";
   dailyForecastTitle.textContent = "5 Day Forecast";
 
   var forecastList = forecast.list;
-  for (i=5; i < forecastList.length; i=i+8){
-    
+  for (var i=5; i < forecastList.length; i=i+8){
+    var forecastListBox = forecastList[i];
+    console.log(forecastListBox);
+
+    var forecastDay = document.createElement("div");
+    forecastDay.classList = "card bg-info m-2";
+
+    var forecast5Date = document.createElement("h4");
+    forecast5Date.textContent = moment.unix(forecastListBox.dt).format("MMM D, YYYY");
+    forecast5Date.classList = "card-header text-center text-white";
+    forecastDay.appendChild(forecast5Date);
+    console.log(forecast5Date);
+
+    var forecastIcon = document.createElement("img");
+    forecastIcon.classList = "card-image";
+    forecastIcon.setAttribute("src", `https://openweathermap.org/img/wn/${forecastListBox.weather[0].icon}@2x.png`);
+    forecastDay.appendChild(forecastIcon); 
+
+    var forecastTemp=document.createElement("span");
+    forecastTemp.classList = "card-footer text-center text-white";
+    forecastTemp.textContent = forecastListBox.main.temp + " °F";
+    forecastDay.appendChild(forecastTemp);
+
+    var forecastHum=document.createElement("span");
+    forecastHum.classList = "card-text text-center text-white";
+    forecastHum.textContent = forecastListBox.main.humidity + "  %";
+    forecastDay.appendChild(forecastHum);
+
+    fiveDayContainer.appendChild(forecastDay);
   }
 
 }

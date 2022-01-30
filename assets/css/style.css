@@ -1,0 +1,10 @@
+.card-image{
+    height: 100%;
+    width: 100%;
+}
+
+.card {
+    width: 1200%;
+    padding: 10px;
+    flex: auto;
+}
