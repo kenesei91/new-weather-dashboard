@@ -8,3 +8,11 @@
     padding: 10px;
     flex: auto;
 }
+
+header {
+    background: linear-gradient(white, rgba(0, 217, 255, 0.616), white);
+}
+
+form input {
+    margin-bottom: 10px;
+}
